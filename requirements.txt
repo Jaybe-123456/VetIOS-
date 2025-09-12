@@ -1,0 +1,33 @@
+# Core FastAPI and Server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# Environment Management
+python-dotenv==1.0.0
+
+# LangChain Framework
+langchain==0.1.0
+langchain-community==0.0.10
+
+# Vector Database and Embeddings
+pinecone-client==2.2.4
+sentence-transformers==2.2.2
+
+# AI Models and Hub
+huggingface-hub==0.19.4
+transformers==4.36.2
+
+# BM25 for Hybrid Retrieval
+rank-bm25==0.2.2
+
+# Core Dependencies
+torch==2.1.2
+numpy==1.24.3
+requests==2.31.0
+
+# Additional FastAPI Features
+python-multipart==0.0.6
+
+# Better Type Hints
+typing-extensions==4.5.0
