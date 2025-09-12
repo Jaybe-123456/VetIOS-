@@ -154,3 +154,56 @@ def get_score_stats() -> Dict[str, Any]:
     """
     try:
         scores = load_scores()
+        
+        if not scores:
+            return {
+                "total_documents": 0,
+                "average_score": 0,
+                "positive_scores": 0,
+                "negative_scores": 0,
+                "neutral_scores": 0
+            }
+        
+        values = list(scores.values())
+        positive_scores = len([s for s in values if s > 0])
+        negative_scores = len([s for s in values if s < 0])
+        neutral_scores = len([s for s in values if s == 0])
+        
+        return {
+            "total_documents": len(scores),
+            "average_score": sum(values) / len(values),
+            "max_score": max(values),
+            "min_score": min(values),
+            "positive_scores": positive_scores,
+            "negative_scores": negative_scores,
+            "neutral_scores": neutral_scores
+        }
+        
+    except Exception as e:
+        logger.error(f"Error calculating score stats: {e}")
+        return {"error": str(e)}
+
+def get_top_sources(limit: int = 10) -> List[Dict[str, Any]]:
+    """
+    Get top-rated sources based on feedback scores.
+    
+    Args:
+        limit: Maximum number of sources to return
+        
+    Returns:
+        List of top sources with their scores
+    """
+    try:
+        scores = load_scores()
+        
+        # Sort by score (highest first)
+        sorted_sources = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+        
+        return [
+            {"document_id": doc_id, "score": score}
+            for doc_id, score in sorted_sources[:limit]
+        ]
+        
+    except Exception as e:
+        logger.error(f"Error getting top sources: {e}")
+        return []
